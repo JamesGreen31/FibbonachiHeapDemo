@@ -1,3 +1,5 @@
+import org.gradle.internal.impldep.org.eclipse.jgit.lib.ObjectChecker.type
+
 plugins {
     id("java")
 }
@@ -16,4 +18,11 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+tasks {
+    withType<Javadoc> {
+        source = sourceSets["main"].allJava
+        classpath += files(sourceSets["main"].output.classesDirs,
+                configurations["compileClasspath"])
+    }
 }
